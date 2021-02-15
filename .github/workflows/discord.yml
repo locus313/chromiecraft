@@ -12,4 +12,4 @@ jobs:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         uses: Ilshidur/action-discord@master
         with:
-          args: 'The user [{{ EVENT_PAYLOAD.sender.login }}]({{ EVENT_PAYLOAD.sender.html_url }}) has linked the issue [{{ EVENT_PAYLOAD.issue.title }}]({{ EVENT_PAYLOAD.issue.url }}) to the AC Repo'
+          args: 'The user [{{ EVENT_PAYLOAD.sender.login }}]({{ EVENT_PAYLOAD.sender.html_url }}) has linked the issue [{{ EVENT_PAYLOAD.issue.title }}]({{ EVENT_PAYLOAD.issue.html_url }}) to the AC Repo'
