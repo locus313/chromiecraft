@@ -7,13 +7,15 @@ jobs:
     if: ${{ github.event.label.name == 'Linked [AC]' }}
     runs-on: ubuntu-latest
     steps:
-      - name: set json
+      - name: Set json
         id: json
-        run: echo "::set-output name=output::{\"embeds\":[{"title":\"[{{ EVENT_PAYLOAD.sender.login }}]({{ EVENT_PAYLOAD.sender.html_url }})\",\"description\":\"[{{ EVENT_PAYLOAD.issue.title }}]({{ EVENT_PAYLOAD.issue.html_url }})\"}]}"
+        run: |
+          TEMPLATE='[{"title": $title, "url": $url, "color": $color, "description": $desc}]'
+          echo "::set-output name=DISCORD_EMBEDS::$(jq -nc --arg title "[${{ EVENT_PAYLOAD.issue.title }}]" --arg url "${{ EVENT_PAYLOAD.issue.html_url }}" --arg color "13260" --arg desc "The user [{{ EVENT_PAYLOAD.sender.login }}]({{ EVENT_PAYLOAD.sender.html_url }}) has linked the issue to the AC Repo" "$TEMPLATE")"
       - name: Discord notification
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-          DISCORD_EMBEDS: ${{ toJson(steps.json.outputs.output) }}
+          #DISCORD_EMBEDS: ${{ toJson(steps.json.outputs.output) }}
         uses: Ilshidur/action-discord@0.3.0
-        with:
-          args: 'The user [{{ EVENT_PAYLOAD.sender.login }}]({{ EVENT_PAYLOAD.sender.html_url }}) has linked the issue [{{ EVENT_PAYLOAD.issue.title }}]({{ EVENT_PAYLOAD.issue.html_url }}) to the AC Repo'
+        #with:
+          #args: 'The user [{{ EVENT_PAYLOAD.sender.login }}]({{ EVENT_PAYLOAD.sender.html_url }}) has linked the issue [{{ EVENT_PAYLOAD.issue.title }}]({{ EVENT_PAYLOAD.issue.html_url }}) to the AC Repo'
