@@ -11,7 +11,7 @@ jobs:
         id: json
         run: |
           TEMPLATE='[{"title": $title, "url": $url, "color": $color, "description": $desc}]'
-          echo "::set-output name=DISCORD_EMBEDS::$(jq -nc --arg title "[${{ EVENT_PAYLOAD.issue.title }}]" --arg url "${{ EVENT_PAYLOAD.issue.html_url }}" --arg color "13260" --arg desc "The user [{{ EVENT_PAYLOAD.sender.login }}]({{ EVENT_PAYLOAD.sender.html_url }}) has linked the issue to the AC Repo" "$TEMPLATE")"
+          echo "::set-output name=DISCORD_EMBEDS::$(jq -nc --arg title "[{{ EVENT_PAYLOAD.issue.title }}]" --arg url "{{ EVENT_PAYLOAD.issue.html_url }}" --arg color "13260" --arg desc "The user [{{ EVENT_PAYLOAD.sender.login }}]({{ EVENT_PAYLOAD.sender.html_url }}) has linked the issue to the AC Repo" "$TEMPLATE")"
       - name: Discord notification
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
