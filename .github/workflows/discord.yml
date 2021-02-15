@@ -11,7 +11,7 @@ jobs:
         id: json
         run: |
           TEMPLATE='[{"title": $title, "url": $url, "color": $color, "description": $desc}]'
-          echo "DISCORD_EMBEDS=$(jq -nc --arg title "[${{ github.event.issue.title }}]" --arg url "${{ github.event.issue.html_url }}" --arg color "13260" --arg desc "The user [${{ github.event.sender.login }}](${{ github.event.sender.html_url }}) has linked the issue to the AC Repo" "$TEMPLATE")" >> $GITHUB_ENV
+          echo "DISCORD_EMBEDS=$(jq -nc --arg title "${{ github.event.issue.title }}" --arg url "${{ github.event.issue.html_url }}" --arg color "13260" --arg desc "The user [${{ github.event.sender.login }}](${{ github.event.sender.html_url }}) has linked the issue to the AC Repo" "$TEMPLATE")" >> $GITHUB_ENV
       - name: Discord notification
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
