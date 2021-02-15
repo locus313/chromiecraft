@@ -12,7 +12,18 @@ jobs:
         run: |
           # Template json to send as an embed
           # jq replaces $var with `jq --arg var <value> "$TEMPLATE"`
-          TEMPLATE='[{"title": $title, "url": $url, "color": $color, "description": $desc, "fields": [{"name": $field_name, "value": $field_value}]}]'
+          TEMPLATE='[{
+             "title": $title,
+             "url": $url,
+             "color": $color,
+             "description": $desc,
+             "fields": [
+               {
+                 "name": $field_name,
+                 "value": $field_value
+               }
+              ]
+             }]'
           
           echo "DISCORD_EMBEDS=$(jq -nc --arg title "${{ github.event.issue.title }}" --arg url "${{ github.event.issue.html_url }}" --arg color "14649120" --arg desc "The user [${{ github.event.sender.login }}](${{ github.event.sender.html_url }}) has linked the issue to the AC Repo" -arg field_name"**Issue Author:**" -arg field_value"${{ github.event.user.login }}" "$TEMPLATE")" >> $GITHUB_ENV
       - name: Discord notification
