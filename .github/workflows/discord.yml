@@ -15,5 +15,5 @@ jobs:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         uses: Ilshidur/action-discord@master
         with:
-          DISCORD_EMBEDS: ${{ toJson(steps.json.outputs.output)
+          DISCORD_EMBEDS: ${{ toJson(steps.json.outputs.output) }}
 #          args: 'The user [{{ EVENT_PAYLOAD.sender.login }}]({{ EVENT_PAYLOAD.sender.html_url }}) has linked the issue [{{ EVENT_PAYLOAD.issue.title }}]({{ EVENT_PAYLOAD.issue.html_url }}) to the AC Repo'
